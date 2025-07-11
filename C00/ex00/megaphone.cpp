@@ -1,4 +1,5 @@
 #include <iostream>
+#include <cctype>
 
 int	main(int ac, char *av[])
 {
@@ -13,7 +14,7 @@ int	main(int ac, char *av[])
 		for (i = 1; i < ac; i++)
 			arg += av[i];
 		for (j = 0; j < (int)arg.length(); j++)
-			arg[j] = toupper(arg[j]);
+			arg[j] = std::toupper(arg[j]);
 		std::cout << arg << std::endl;
 	}
 	return (0);
