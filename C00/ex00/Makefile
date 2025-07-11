@@ -10,7 +10,7 @@ $(NAME): $(OBJS)
 	$(CXX) $(CXXFLAGS) $(OBJS) -o $(NAME)
 
 clean:
-	rm -f $(OBJS) $(NAME)
+	rm -f $(OBJS)
 
 fclean: clean
 	rm -f $(NAME)
