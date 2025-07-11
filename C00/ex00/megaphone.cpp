@@ -9,14 +9,12 @@ int	main(int ac, char *av[])
 		std::cout << "* LOUD AND UNBEARABLE FEEDBACK NOISE *" << std::endl;
 	else
 	{
+		std::string arg;
 		for (i = 1; i < ac; i++)
-		{
-			std::string arg(av[i]);
-			for (j = 0; j < (int)arg.length(); j++)
-				arg[j] = toupper(arg[j]);
-			std::cout << arg;
-		}
-		std::cout << std::endl;
+			arg += av[i];
+		for (j = 0; j < (int)arg.length(); j++)
+			arg[j] = toupper(arg[j]);
+		std::cout << arg << std::endl;
 	}
 	return (0);
 }
