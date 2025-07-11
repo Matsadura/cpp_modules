@@ -45,7 +45,7 @@ std::string Contact::getNickname(void) const
 
 void Contact::setNickname(std::string nick)
 {
-    this->_last_name = nick;
+    this->_nickname = nick;
 }
 
 std::string Contact::getPhoneNumber(void) const

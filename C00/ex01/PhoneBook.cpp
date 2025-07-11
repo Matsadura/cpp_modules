@@ -1,4 +1,5 @@
 #include "PhoneBook.hpp"
+#include <iomanip>
 
 int PhoneBook::max_contacts = 8;
 
@@ -14,9 +15,9 @@ PhoneBook::~PhoneBook(void)
 
 Contact PhoneBook::getContact(int index) const
 {
-    if (index < 0 && index > this->nbContacts)
-        return (Contact());
-    return (this->_contacts[index]);
+    if (index < 0 || index >= this->nbContacts)
+        return Contact();
+    return this->_contacts[index];
 }
 
 void    PhoneBook::displayContacts(void) const
