@@ -15,7 +15,8 @@
 
 /**
  * PhoneBook: class to manage a collection of contacts.
- * @Methods: addContact, getContact, searchContacts, displaySignleContact.
+ * @Methods: addContact, getContact, searchContacts, displaySignleContact
+ * 		setContact, getNbContacts, setNbContacts, getCurrentIndex, setCurrentIndex.
  * @Attributes: _contacts, _currentIndex, max_contacts.
  */
 class PhoneBook
@@ -24,16 +25,21 @@ public:
     PhoneBook(void);
     ~PhoneBook(void);
     
-    int nbContacts;
     
-    void addContact(void);
-    Contact getContact(int index) const;
-    void    searchContacts(void) const;
-	void	displaySingleContact(void) const;
+    void 		addContact(void);
+    Contact 	getContact(int index) const;
+	void		setContact(int index, Contact contact);
+    void    	searchContacts(void) const;
+	void		displaySingleContact(void) const;
+	int			getNbContacts(void) const;
+	void		setNbContacts(int n);
+	int			getCurrentIndex(void) const;
+	void		setCurrentIndex(int n);
     
 private:
-    Contact _contacts[8];
-    int     _currentIndex;
+    Contact 	_contacts[8];
+    int			_nbContacts;
+    int     	_currentIndex;
     static int  max_contacts;
 	std::string formatField(const std::string& field) const;
 };

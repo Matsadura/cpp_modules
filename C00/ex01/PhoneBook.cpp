@@ -13,7 +13,7 @@ int PhoneBook::max_contacts = 8;
  */
 PhoneBook::PhoneBook(void)
 {
-    this->nbContacts = 0;
+    this->_nbContacts = 0;
     this->_currentIndex = 0;
 }
 
@@ -25,15 +25,61 @@ PhoneBook::~PhoneBook(void)
 }
 
 /**
+ * getNbContacts - Getter for number of contacts
+ * return: Number of contacts in the phonebook
+ */
+int	PhoneBook::getNbContacts(void) const
+{
+	return (this->_nbContacts);
+}
+
+/**
+ * setNbContacts - Setter for number of contacts
+ * @n: Number of contacts to set
+ */
+void	PhoneBook::setNbContacts(int n)
+{
+	this->_nbContacts = n;
+}
+
+/**
+ * getCurrentIndex - Getter for current index
+ * return: Current index in the phonebook
+ */
+int	PhoneBook::getCurrentIndex(void) const
+{
+	return (this->_currentIndex);
+}
+
+/**
+ * setCurrentIndex - Setter for current index
+ * @n: Current index to set
+ */
+void	PhoneBook::setCurrentIndex(int n)
+{
+	this->_currentIndex = n;
+}
+
+/**
  * getContact - Getter for contact at index
  * @index: Index of the contact to get
  * return: Contact at the specified index
  */
 Contact PhoneBook::getContact(int index) const
 {
-    if (index < 0 || index >= this->nbContacts)
+    if (index < 0 || index >= this->getNbContacts())
         return Contact();
     return this->_contacts[index];
+}
+
+/**
+ * setContact - Setter for contacts
+ * @index: Index of contact
+ * @contact: Contact object
+ */
+void	PhoneBook::setContact(int index, Contact contact)
+{
+	this->_contacts[index] = contact;
 }
 
 /**
@@ -59,9 +105,9 @@ void    PhoneBook::searchContacts(void) const
 	std::cout << std::setfill(' ') << std::setw(10) << "First name" << "|";
 	std::cout << std::setfill(' ') << std::setw(10) << "Last name" << "|";
 	std::cout << std::setfill(' ') << std::setw(10) << "Nickname" << std::endl;
-    for (i = 0; i < this->nbContacts; i++)
+    for (i = 0; i < this->getNbContacts(); i++)
     {
-		Contact contact = this->_contacts[i];
+		Contact contact = getContact(i);
 		std::cout << std::setfill(' ') << std::setw(10) << i << "|";
         std::cout << std::setfill(' ') << std::setw(10) << formatField(contact.getFirstName()) << "|";
 		std::cout << std::setfill(' ') << std::setw(10) << formatField(contact.getLastName()) << "|";
@@ -86,7 +132,7 @@ void	PhoneBook::displaySingleContact(void) const
 		return ;
 	}
 	i = std::atoi(index.c_str());
-	if ( i < 0 || i >= this->nbContacts)
+	if (i < 0 || i >= this->getNbContacts())
 	{
 		std::cout << "Error: No contact found!" << std::endl;
 		return ;
@@ -119,9 +165,10 @@ void PhoneBook::addContact(void)
             return ;
         }
 
-    this->_contacts[this->_currentIndex % max_contacts] = Contact(first_name, last_name, nickname, phone_number, secret);
-    this->_currentIndex++;
+    this->setContact(this->getCurrentIndex() % max_contacts,
+		Contact(first_name, last_name, nickname, phone_number, secret));
+    this->setCurrentIndex(this->getCurrentIndex() + 1);
 
-    if (this->nbContacts < max_contacts)
-        this->nbContacts++;
+    if (this->getNbContacts() < max_contacts)
+        this->setNbContacts(this->getNbContacts() + 1);
 }
