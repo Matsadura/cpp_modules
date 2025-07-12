@@ -1,9 +1,21 @@
+/**
+ * Contact.hpp
+ * Header file for the Contact class.
+ * This class represents a contact with personal details.
+ * It includes methods to get and set contact information.
+ */
 #ifndef CONTACT_H
 #define CONTACT_H
 
 #include <iostream>
 #include <string>
 
+/**
+ * Contact: class to represent a contact with personal details.
+ * @Methods: getFirstName, getLastName, getNickname, getPhoneNumber, getSecret,
+ *          setFirstName, setLastName, setNickname, setPhoneNumber, setSecret.
+ * @Attributes: _first_name, _last_name, _nickname, _phone_number, _darkest_secret.
+ */
 class Contact
 {
 public:

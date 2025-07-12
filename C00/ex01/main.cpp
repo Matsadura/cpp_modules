@@ -1,23 +1,28 @@
-#include <iostream>
-#include <string>
-#include <cstdlib>
 #include "PhoneBook.hpp"
 
+/**
+ * Main function for the PhoneBook application.
+ */
 int main(void)
 {
     PhoneBook phone;
 
-    std::cout << "Welcome to your phonebook!" << std::endl;
+    std::cout << "Welcome back!" << std::endl;
     while (1)
     {
         std::string input;
-        std::cout << "CMD: ", std::cin >> input;
+        std::cout << "CMD: ", std::getline(std::cin, input);
+		if (std::cin.fail())
+		{
+			std::cout << "\nSee you next time!" << std::endl;
+			return(EXIT_SUCCESS);
+		}
         if (input.compare("ADD") == 0)
             phone.addContact();
         else if (input.compare("SEARCH") == 0)
-            phone.displayContacts();
+            phone.searchContacts();
         else if (input.compare("EXIT") == 0)
-            exit(EXIT_SUCCESS);
+            return(0);
     }
     return (0);
 }
