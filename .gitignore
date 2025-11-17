@@ -1,6 +1,9 @@
 **/.vscode
 **/a.out
 **/*.o
+
 C00/ex00/megaphone
 C00/ex01/phonebook
 C00/ex02/job
+
+C01/ex00/zombie
