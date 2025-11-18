@@ -2,8 +2,10 @@
 
 int main(void)
 {
-	Zombie* test;
+	Zombie* zombie;
 
-	test = newZombie("Zidane");
-
+	zombie = newZombie("Zombie 1");
+	randomChump("Random Zombie");
+	delete zombie;
+	return (0);
 }

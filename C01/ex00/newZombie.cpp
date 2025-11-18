@@ -1,5 +1,10 @@
 #include "Zombie.hpp"
 
+/**
+ * newZombie - Creates and names a new zombie
+ * @name: The name of new zombie
+ * Return: Zombie object.
+ */
 Zombie*	newZombie( std::string name )
 {
 	Zombie* dead_body;
