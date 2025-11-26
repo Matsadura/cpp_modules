@@ -12,6 +12,11 @@ Zombie::Zombie( void )
 {	
 }
 
+Zombie::Zombie( std::string name )
+{
+	this->_name = name;
+}
+
 /**
  * Zombie - Class destructor
  */
