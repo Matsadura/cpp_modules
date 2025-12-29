@@ -160,12 +160,20 @@ Fixed Fixed::operator/( const Fixed& other) const
 	return (result);
 }
 
+/**
+ * Pre-increment Operator
+ * Return: reference to the current object after operation
+ */
 Fixed& Fixed::operator++( void )
 {
 	++this->_fixed_point;
 	return (*this);
 }
 
+/**
+ * Post-increment Operator
+ * Return: reference to the current object before operation
+ */
 Fixed Fixed::operator++( int )
 {
 	Fixed tmp = *this;
@@ -174,12 +182,20 @@ Fixed Fixed::operator++( int )
 	return (tmp);
 }
 
+/**
+ * Pre-decrement Operator
+ * Return: reference to the current object after operation
+ */
 Fixed& Fixed::operator--( void )
 {
 	--this->_fixed_point;
 	return (*this);
 }
 
+/**
+ * Post-decrement Operator
+ * Return: reference to the current object before operation
+ */
 Fixed Fixed::operator--( int )
 {
 	Fixed tmp = *this;
@@ -188,6 +204,12 @@ Fixed Fixed::operator--( int )
 	return (tmp);
 }
 
+/**
+ * Static method to get the minimum of two Fixed objects
+ * @a: first Fixed object
+ * @b: second Fixed object
+ * Return: reference to the minimum Fixed object
+ */
 Fixed& Fixed::min(Fixed& a, Fixed& b)
 {
 	if (a.getRawBits() > b.getRawBits())
@@ -195,6 +217,12 @@ Fixed& Fixed::min(Fixed& a, Fixed& b)
 	return (a);
 }
 
+/**
+ * Static method to get the minimum of two const Fixed objects
+ * @a: first const Fixed object
+ * @b: second const Fixed object
+ * Return: reference to the minimum const Fixed object
+ */
 const Fixed& Fixed::min(const Fixed& a, const Fixed& b)
 {
 	if (a.getRawBits() > b.getRawBits())
@@ -202,6 +230,12 @@ const Fixed& Fixed::min(const Fixed& a, const Fixed& b)
 	return (a);	
 }
 
+/**
+ * Static method to get the maximum of two Fixed objects
+ * @a: first Fixed object
+ * @b: second Fixed object
+ * Return: reference to the maximum Fixed object
+ */
 Fixed& Fixed::max(Fixed& a, Fixed& b)
 {
 	if (a.getRawBits() < b.getRawBits())
@@ -209,6 +243,12 @@ Fixed& Fixed::max(Fixed& a, Fixed& b)
 	return (a);
 }
 
+/**
+ * Static method to get the maximum of two const Fixed objects
+ * @a: first const Fixed object
+ * @b: second const Fixed object
+ * Return: reference to the maximum const Fixed object
+ */
 const Fixed& Fixed::max(const Fixed& a, const Fixed& b)
 {
 	if (a.getRawBits() < b.getRawBits())
