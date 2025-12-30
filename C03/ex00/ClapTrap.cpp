@@ -30,3 +30,14 @@ ClapTrap& ClapTrap::operator=( const ClapTrap& other )
 ClapTrap::~ClapTrap( void )
 {
 }
+
+void ClapTrap::attack( const std::string &target )
+{
+	if (this->_energyPoints > 0)
+	{
+		std::cout << this->_name << "attacks " << target << "and deals " << this->_attackDamage << std::endl;
+		this->_energyPoints--;
+	}
+	else
+		std::cout << this->_name << "has 0 energy points\n";
+}
