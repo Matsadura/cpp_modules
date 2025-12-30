@@ -13,12 +13,7 @@ class ClapTrap
 
 	public:
 		ClapTrap( void );
-		ClapTrap(
-			const std::string& name,
-			const unsigned int& hp,
-			const unsigned int& ep,
-			const unsigned int& ad
-			);
+		ClapTrap( const std::string& name );
 		ClapTrap( const ClapTrap& other );
 		ClapTrap& operator=( const ClapTrap& other );
 		~ClapTrap( void );
