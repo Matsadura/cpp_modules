@@ -32,5 +32,8 @@ int	main(void)
 	h.beRepaired(50);
 	h.guardGate();
 
+	ClapTrap* ptr = new ScavTrap("New Scav");
+	delete ptr;
+	
 	return (0);
 }
