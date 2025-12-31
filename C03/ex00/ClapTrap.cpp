@@ -5,7 +5,7 @@
  */
 ClapTrap::ClapTrap( void ): _name("ClapTrap"), _hitPoints(10), _energyPoints(10), _attackDamage(0)
 {
-	std::cout << "Default constructor called.\n";
+	std::cout << "ClapTrap Default constructor called.\n";
 }
 
 /**
@@ -14,7 +14,7 @@ ClapTrap::ClapTrap( void ): _name("ClapTrap"), _hitPoints(10), _energyPoints(10)
  */
 ClapTrap::ClapTrap( const std::string& name): _name(name), _hitPoints(10), _energyPoints(10), _attackDamage(0)
 {
-	std::cout << "Parametreized constructor called.\n";
+	std::cout << "ClapTrap Parametreized constructor called.\n";
 }
 
 /**
@@ -23,7 +23,7 @@ ClapTrap::ClapTrap( const std::string& name): _name(name), _hitPoints(10), _ener
  */
 ClapTrap::ClapTrap( const ClapTrap& other)
 {
-	std::cout << "Copy constructor called.\n";
+	std::cout << "ClapTrap Copy constructor called.\n";
 	*this = other;
 	return ;
 }
@@ -35,7 +35,7 @@ ClapTrap::ClapTrap( const ClapTrap& other)
  */
 ClapTrap& ClapTrap::operator=( const ClapTrap& other )
 {
-	std::cout << "Copy assignement operator called.\n";
+	std::cout << "ClapTrap Copy assignement operator called.\n";
 	if (this != &other )
 	{
 		this->_name = other._name;
@@ -51,7 +51,7 @@ ClapTrap& ClapTrap::operator=( const ClapTrap& other )
  */
 ClapTrap::~ClapTrap( void )
 {
-	std::cout << "Destructor called.\n";
+	std::cout << "ClapTrap Destructor called.\n";
 }
 
 /**
@@ -77,7 +77,7 @@ void ClapTrap::attack( const std::string &target )
  * beRepaired - Repair function
  * @amount: Amount of hit points to restore
  */
-void ClapTrap::beRepaired(unsigned int amount)
+void ClapTrap::beRepaired( unsigned int amount )
 {
 	if (this->_energyPoints > 0 && this->_hitPoints > 0)
 	{
