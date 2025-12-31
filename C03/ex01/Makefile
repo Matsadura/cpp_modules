@@ -1,13 +1,12 @@
 CXX = c++
 CXXFLAGS = -Wall -Wextra -Werror -std=c++98
 SRCS = main.cpp ClapTrap.cpp ScavTrap.cpp
-HEADER = ClapTrap.hpp ScavTrap.hpp
 OBJS = $(SRCS:.cpp=.o)
 NAME = program
 
 all: $(NAME)
 
-$(NAME): $(OBJS) $(HEADER)
+$(NAME): $(OBJS)
 	$(CXX) $(CXXFLAGS) $(OBJS) -o $(NAME)
 
 clean:
