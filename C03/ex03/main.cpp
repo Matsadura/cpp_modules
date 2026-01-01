@@ -1,68 +1,37 @@
 #include "DiamandTrap.hpp"
+#include <iostream>
 
-int	main(void)
+int main( void )
 {
-	ClapTrap a;
-	ClapTrap b ( "Clappy" );
-	ClapTrap c( b);
-	ClapTrap d;
+    std::cout << "--- 1. TESTING DIAMONDTRAP CONSTRUCTION ---" << std::endl;
+    {
+        DiamandTrap d1("Monster");
+        
+        std::cout << "\n[Checking Stats]" << std::endl;
+		d1.getStats();
+        d1.whoAmI();
+        d1.attack("dummy_target");
+    }
 
-	d = c;
+    std::cout << "\n--- 2. TESTING SPECIAL CAPABILITIES ---" << std::endl;
+    {
+        DiamandTrap d2("Hybrid");
+        d2.whoAmI();
+        d2.guardGate();
+        d2.highFiveGuys();
+    }
 
-	d.attack("Victim");
-	d.takeDamage(3);
-	d.beRepaired(2);
-	d.takeDamage(10);
-	d.attack("Victim");
-	d.beRepaired(5);
+    std::cout << "\n---TESTING COPY/ASSIGNMENT ---" << std::endl;
+    {
+        DiamandTrap d3("Original");
+        DiamandTrap d4(d3);
+        
+        DiamandTrap d5;
+        d5 = d3;
+        
+        d4.whoAmI();
+        d5.whoAmI();
+    }
 
-	ScavTrap s;
-	ScavTrap t( "Scavvy" );
-	ScavTrap u( t );
-	ScavTrap v;
-
-	v = u;
-	
-	v.attack("Intruder");
-	v.takeDamage(15);
-	v.beRepaired(10);
-	v.guardGate();
-	v.takeDamage(100);
-	v.attack("Intruder");
-	v.beRepaired(50);
-
-
-	FragTrap e;
-	FragTrap f( "Fraggy" );
-	FragTrap g( f );
-	FragTrap h;
-
-	h = g;
-
-	h.attack("Enemy");
-	h.takeDamage(20);
-	h.beRepaired(10);
-	h.highFiveGuys();
-	h.takeDamage(100);
-	h.attack("Enemy");
-	h.beRepaired(50);
-
-	DiamandTrap x;
-	DiamandTrap y( "Diamandy" );
-	DiamandTrap z( y );
-	DiamandTrap w;
-
-	w = z;
-
-	w.attack("Target");
-	w.takeDamage(30);
-	w.beRepaired(15);
-	w.guardGate();
-	w.highFiveGuys();
-	w.takeDamage(150);
-	w.attack("Target");
-	w.beRepaired(75);
-	w.whoAmI();
-
-	return (0);
+    return 0;
 }

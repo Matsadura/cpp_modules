@@ -16,6 +16,7 @@ class DiamandTrap: public FragTrap, public ScavTrap
 		~DiamandTrap( void );
 		void	attack( const std::string &target );
 		void	whoAmI( void );
+		void    getStats( void ) const;
 };
 
 #endif /* DIAMANDTRAP_HPP */

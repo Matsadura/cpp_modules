@@ -85,5 +85,5 @@ void ScavTrap::attack( const std::string &target )
  */
 void ScavTrap::guardGate( void )
 {
-	std::cout << "ScavTrap is now in Gate keeper mode\n";
+	std::cout << this->_name << " is now in Gate keeper mode\n";
 }
