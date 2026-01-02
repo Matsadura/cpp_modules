@@ -4,33 +4,28 @@
 
 int main()
 {
-	Animal* animals[4];
+	std::cout << "----- Animal Test -----" << std::endl;
+	const Animal* animal1 = new Dog();
+	const Animal* animal2 = new Cat();
 
-	for (int i = 0; i < 4; ++i)
-	{
-		if (i % 2 == 0)
-			animals[i] = new Dog();
-		else
-			animals[i] = new Cat();
-	}
 
 	std::cout << std::endl;
 
-	for (int i = 0; i < 4; ++i)
-	{
-		std::cout << "Animal " << i << " is a " << animals[i]->getType() << " and says: ";
-		animals[i]->makeSound();
-	}
+	std::cout << "----- Animal Sounds -----" << std::endl;
+	std::cout << "Animal 1 is a " << animal1->getType() << " and says: ";
+	animal1->makeSound();
+	std::cout << "Animal 2 is a " << animal2->getType() << " and says: ";
+	animal2->makeSound();
 
 	std::cout << std::endl;
 
-	for (int i = 0; i < 4; ++i)
-	{
-		delete animals[i];
-	}
+	std::cout << "----- Cleaning Up -----" << std::endl;
+	delete animal1;
+	delete animal2;
 
 	std::cout << std::endl;
 
+	std::cout << "----- Wrong Animal Test -----" << std::endl;
 	WrongAnimal* wrongAnimal = new WrongAnimal();
 	WrongAnimal* wrongCat = new WrongCat();
 
