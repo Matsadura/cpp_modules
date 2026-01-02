@@ -1,6 +1,6 @@
 #include "Dog.hpp"
 #include "Cat.hpp"
-#include "Animal.hpp"
+#include "WrongCat.hpp"
 
 int main()
 {
@@ -28,6 +28,20 @@ int main()
 	{
 		delete animals[i];
 	}
+
+	std::cout << std::endl;
+
+	WrongAnimal* wrongAnimal = new WrongAnimal();
+	WrongAnimal* wrongCat = new WrongCat();
+
+	std::cout << "WrongAnimal is a " << wrongAnimal->getType() << " and says: ";
+	wrongAnimal->makeSound();
+
+	std::cout << "WrongCat is a " << wrongCat->getType() << " and says: ";
+	wrongCat->makeSound();
+
+	delete wrongAnimal;
+	delete wrongCat;
 
 	return 0;
 }
