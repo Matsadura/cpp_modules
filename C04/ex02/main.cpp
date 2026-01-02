@@ -30,12 +30,16 @@ int main()
 
 	std::cout << std::endl;
 	std::cout << "----- Deep Copy Test -----" << std::endl;
-	Cat originalCat;
 	{
-		Cat copiedCat = originalCat;
+		Cat originalCat;
+		{
+			Cat copiedCat = originalCat;
+		}
 	}
 
-	Animal anim;
+	std::cout << std::endl;
+	std::cout << "----- Abstract Class Test (Uncomment to test)-----" << std::endl;
+	//Animal anim;
 
 	return 0;
 }
