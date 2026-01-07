@@ -45,7 +45,16 @@ class AForm
 				}
 		};
 		
-		virtual	void execute(Bureaucrat const & executor ) const = 0;
+		class FormNotSignedException: public std::exception
+		{
+			public:
+				virtual const char* what() const throw()
+				{
+					return ("Form Not Signed!");
+				}
+		};
+
+		virtual void		execute( const Bureaucrat& executor ) const = 0;
 };
 
 std::ostream& operator<<(std::ostream& os, const AForm&  bureau);

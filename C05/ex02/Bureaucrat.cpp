@@ -1,5 +1,5 @@
 #include "Bureaucrat.hpp"
-#include "Form.hpp"
+#include "AForm.hpp"
 
 Bureaucrat::Bureaucrat( void ): _name("Bureau"), _grade(150)
 {
@@ -65,7 +65,7 @@ std::ostream& operator<<(std::ostream& os, const Bureaucrat& bureau)
 	return (os); 
 }
 
-void	Bureaucrat::signForm(Form& form)
+void	Bureaucrat::signForm(AForm& form)
 {
 	try
 	{
@@ -75,5 +75,18 @@ void	Bureaucrat::signForm(Form& form)
 	catch(const std::exception& e)
 	{
 		std::cout << this->_name << " couldn't sign " << form.getName() << " because " << e.what() << std::endl;
+	}
+}
+
+void	Bureaucrat::executeForm(const AForm& form) const
+{
+	try
+	{
+		form.execute(*this);
+		std::cout << this->_name << " executed " << form.getName() << std::endl;
+	}
+	catch(const std::exception& e)
+	{
+		std::cout << this->_name << " couldn't execute " << form.getName() << " because " << e.what() << std::endl;
 	}
 }
