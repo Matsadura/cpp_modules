@@ -1,13 +1,8 @@
 #include <iostream>
-#include <cstdlib>
-#include <ctime>
 #include "Bureaucrat.hpp"
 #include "AForm.hpp"
-#include "ShrubberyCreationForm.hpp"
-#include "RobotomyRequestForm.hpp"
-#include "PresidentialPardonForm.hpp"
+#include "Intern.hpp"
 
-// Colors for readable output
 #define RESET   "\033[0m"
 #define RED     "\033[31m"
 #define GREEN   "\033[32m"
@@ -21,88 +16,58 @@ void    test_header(std::string title)
 
 int main(void)
 {
-    // Seed for Robotomy randomness
-    std::srand(std::time(NULL));
+    Intern  someRandomIntern;
+    Bureaucrat boss("Boss", 1);
 
-    // --------------------------------------------------------------------------
-    test_header("1. TESTING SHRUBBERY CREATION FORM (Target: 'home')");
-    // Sign: 145, Exec: 137
-    try {
-        Bureaucrat  gardener("Gardener", 137);
-        AForm* shrub = new ShrubberyCreationForm("home");
+    test_header("1. INTERN CREATES ROBOTOMY REQUEST");
+    {
+        AForm* rrf = someRandomIntern.makeForm("Robotomy", "Bender");
+        if (rrf)
+        {
+            std::cout << *rrf << std::endl;
+            boss.signForm(*rrf);
+            boss.executeForm(*rrf);
+            delete rrf;
+        }
+    }
 
-        std::cout << "Form Info: " << *shrub << std::endl;
+    test_header("2. INTERN CREATES SHRUBBERY CREATION");
+    {
+        AForm* scf = someRandomIntern.makeForm("Shrubbery", "Home");
+        if (scf)
+        {
+            std::cout << *scf << std::endl;
+            boss.signForm(*scf);
+            boss.executeForm(*scf);
+            delete scf;
+        }
+    }
+
+    test_header("3. INTERN CREATES PRESIDENTIAL PARDON");
+    {
+        AForm* ppf = someRandomIntern.makeForm("Presidential", "Criminal");
+        if (ppf)
+        {
+            std::cout << *ppf << std::endl;
+            boss.signForm(*ppf);
+            boss.executeForm(*ppf);
+            delete ppf;
+        }
+    }
+
+    test_header("4. INTERN TRIES TO CREATE UNKNOWN FORM");
+    {
+        AForm* wrong = someRandomIntern.makeForm("fake form", "Target");
         
-        // Attempt to execute before signing (Should Fail)
-        std::cout << YELLOW << "[Test] Execute unsigned form:" << RESET << std::endl;
-        gardener.executeForm(*shrub);
-
-        // Sign it
-        std::cout << YELLOW << "[Test] Sign form:" << RESET << std::endl;
-        gardener.signForm(*shrub);
-
-        // Execute it (Should Create file 'home_shrubbery')
-        std::cout << YELLOW << "[Test] Execute signed form:" << RESET << std::endl;
-        gardener.executeForm(*shrub);
-        std::cout << GREEN << "(Check your directory for 'home_shrubbery' file!)" << RESET << std::endl;
-
-		delete shrub;
-    }
-    catch (std::exception &e) {
-        std::cout << RED << "Exception: " << e.what() << RESET << std::endl;
-    }
-
-    // --------------------------------------------------------------------------
-    test_header("2. TESTING ROBOTOMY REQUEST FORM (Target: 'Bender')");
-    // Sign: 72, Exec: 45
-    try {
-        Bureaucrat  doc("Doctor", 45);
-        Bureaucrat  intern("Intern", 150);
-        AForm* robo = new RobotomyRequestForm("Bender");
-
-        // Intern tries to sign (Should Fail)
-        std::cout << YELLOW << "[Test] Low grade sign attempt:" << RESET << std::endl;
-        intern.signForm(*robo);
-        // Doctor signs
-        std::cout << YELLOW << "[Test] Proper grade sign:" << RESET << std::endl;
-        doc.signForm(*robo);
-
-        // Execute multiple times to test 50% chance
-        std::cout << YELLOW << "[Test] Execution randomness (Running 4 times):" << RESET << std::endl;
-        doc.executeForm(*robo);
-        doc.executeForm(*robo);
-        doc.executeForm(*robo);
-        doc.executeForm(*robo);
-
-		delete robo;
-    }
-    catch (std::exception &e) {
-        std::cout << RED << "Exception: " << e.what() << RESET << std::endl;
-    }
-
-    // --------------------------------------------------------------------------
-    test_header("3. TESTING PRESIDENTIAL PARDON FORM (Target: 'Criminal')");
-    // Sign: 25, Exec: 5
-    try {
-        Bureaucrat  president("Zaphod", 5);
-        Bureaucrat  vp("Vice President", 20); // Can sign (20 < 25) but CANNOT execute (20 > 5)
-        AForm* pardon = new PresidentialPardonForm("Criminal");
-
-        // VP signs
-        std::cout << YELLOW << "[Test] VP signs the form:" << RESET << std::endl;
-        vp.signForm(*pardon);
-
-        // VP tries to execute (Should Fail)
-        std::cout << YELLOW << "[Test] VP tries to execute (Grade too low):" << RESET << std::endl;
-        vp.executeForm(*pardon);
-
-        // President executes
-        std::cout << YELLOW << "[Test] President executes:" << RESET << std::endl;
-        president.executeForm(*pardon);
-		delete pardon;
-    }
-    catch (std::exception &e) {
-        std::cout << RED << "Exception: " << e.what() << RESET << std::endl;
+        if (wrong == NULL)
+        {
+            std::cout << GREEN << "Success: Intern returned NULL for invalid form." << RESET << std::endl;
+        }
+        else
+        {
+            std::cout << RED << "Fail: Intern created something for invalid input!" << RESET << std::endl;
+            delete wrong;
+        }
     }
 
     return (0);
