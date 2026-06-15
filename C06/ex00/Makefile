@@ -1,6 +1,6 @@
 CXX = c++
 CXXFLAGS = -Wall -Wextra -Werror -std=c++98
-SRCS = main.cpp ScalarConverter.cpp
+SRCS = main.cpp ScalarConverter.cpp ScalarConverterUtils.cpp
 OBJS = $(SRCS:.cpp=.o)
 NAME = program
 
