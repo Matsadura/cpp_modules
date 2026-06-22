@@ -2,13 +2,13 @@
 #include <string>
 
 template <typename T>
-void print(const T& x)
+void print(const T &x)
 {
     std::cout << x << '\n';
 }
 
 template <typename T>
-void addOne(T& x)
+void addOne(T &x)
 {
     ++x;
 }
@@ -18,9 +18,9 @@ void printInt(int x)
     std::cout << x << '\n';
 }
 
-int main()
+int main(void)
 {
-    int a[] = {1, 2, 3};
+    int       a[] = {1, 2, 3};
     const int b[] = {4, 5, 6};
 
     iter(a, 3, printInt);
