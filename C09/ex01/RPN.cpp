@@ -27,7 +27,7 @@ bool RPN::isOperator(char c) const
 void RPN::applyOperator(char op)
 {
     if (_stack.size() < 2)
-        throw std::runtime_error("Error: Not enough operands for the operator.");
+        throw std::runtime_error("Error");
 
     int b = _stack.top();
     _stack.pop();
@@ -47,11 +47,11 @@ void RPN::applyOperator(char op)
             break;
         case '/':
             if (b == 0)
-                throw std::runtime_error("Error: Division by zero.");
+                throw std::runtime_error("Error");
             _stack.push(a / b);
             break;
         default:
-            throw std::runtime_error("Error: Unknown operator.");
+            throw std::runtime_error("Error");
     }
 }
 
@@ -62,31 +62,28 @@ void RPN::evaluate(const std::string &expression)
 
     while (iss >> token)
     {
-        if (token.length() == 1 && isOperator(token[0]))
-        {
-            applyOperator(token[0]);
-        }
+        if (token.length() != 1)
+            throw std::runtime_error("Error");
+
+        char c = token[0];
+
+        if (std::isdigit(c))
+            _stack.push(c - '0');
+        else if (isOperator(c))
+            applyOperator(c);
         else
-        {
-            try
-            {
-                int value = std::strtol(token.c_str(), NULL, 10);
-                _stack.push(value);
-            }
-            catch (const std::invalid_argument &)
-            {
-                throw std::runtime_error("Error: Invalid token in expression.");
-            }
-        }
+            throw std::runtime_error("Error");
     }
 
     if (_stack.size() != 1)
-        throw std::runtime_error("Error: Invalid RPN expression.");
+    {
+        throw std::runtime_error("Error");
+    }
 }
 
 int RPN::getTop() const
 {
     if (_stack.empty())
-        throw std::runtime_error("Error: Stack is empty.");
+        throw std::runtime_error("Error");
     return _stack.top();
 }
