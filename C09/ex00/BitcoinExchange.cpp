@@ -49,14 +49,14 @@ void BitcoinExchange::loadDatabase(const std::string &filename)
 void BitcoinExchange::ValidateDate(const std::string &date)
 {
     if (date.length() != 10 || date[4] != '-' || date[7] != '-')
-        throw std::invalid_argument("Error: Invalid date format. Expected YYYY-MM-DD.");
+        throw std::invalid_argument("Error: Invalid date format. Expected YYYY-MM-DD. => " + date);
 
     for (std::size_t i = 0; i < date.length(); ++i)
     {
         if (i == 4 || i == 7)
             continue;
         if (!std::isdigit(date[i]))
-            throw std::invalid_argument("Error: date" + date + " contains non-digit characters. ");
+            throw std::invalid_argument("Error: date " + date + " contains non-digit characters. ");
     }
 
     int year  = std::atoi(date.substr(0, 4).c_str());
@@ -64,24 +64,24 @@ void BitcoinExchange::ValidateDate(const std::string &date)
     int day   = std::atoi(date.substr(8, 2).c_str());
 
     if (year < 2009)
-        throw std::invalid_argument("Error: year" + intToString(year) + " must be 2009 or later..");
+        throw std::invalid_argument("Error: year " + intToString(year) + " must be 2009 or later..");
 
     if (month < 1 || month > 12)
-        throw std::invalid_argument("Error: month" + intToString(month) + " must be between 1 and 12.");
+        throw std::invalid_argument("Error: month " + intToString(month) + " must be between 1 and 12.");
 
     if (day < 1 || day > 31)
-        throw std::invalid_argument("Error: day" + intToString(day) + " must be between 1 and 31.");
+        throw std::invalid_argument("Error: day " + intToString(day) + " must be between 1 and 31.");
 
     if ((month == 4 || month == 6 || month == 9 || month == 11) && day > 30)
-        throw std::invalid_argument("Error: day" + intToString(day) + " must be between 1 and 30 for the given month.");
+        throw std::invalid_argument("Error: day " + intToString(day) + " must be between 1 and 30 for the given month.");
 
     if (month == 2)
     {
         bool isLeapYear = (year % 4 == 0 && year % 100 != 0) || (year % 400 == 0);
         if (isLeapYear && day > 29)
-            throw std::invalid_argument("Error: February" + intToString(day) + " has only 29 days in a leap year.");
+            throw std::invalid_argument("Error: February " + intToString(day) + " has only 29 days in a leap year.");
         if (!isLeapYear && day > 28)
-            throw std::invalid_argument("Error: February" + intToString(day) + " has only 28 days in a non-leap year.");
+            throw std::invalid_argument("Error: February " + intToString(day) + " has only 28 days in a non-leap year.");
     }
 }
 
@@ -108,15 +108,16 @@ void BitcoinExchange::ValidateValue(const std::string &value)
         throw std::invalid_argument("Error: value " + value + " must not exceed 1000.");
 }
 
-std::string strip(const std::string& str)
+std::string strip(const std::string &str)
 {
     const std::string whitespace = " \t\n\r\f\v";
-    
+
     size_t start = str.find_first_not_of(whitespace);
-    if (start == std::string::npos) return "";
+    if (start == std::string::npos)
+        return "";
 
     size_t end = str.find_last_not_of(whitespace);
-    
+
     return str.substr(start, end - start + 1);
 }
 
@@ -135,33 +136,42 @@ void BitcoinExchange::processInputFile(const std::string &filename)
     while (std::getline(file, line))
     {
         std::istringstream iss(line);
-        std::string        date;
-        std::string        value;
-        double             value_numeric;
 
-        if (std::getline(iss, date, '|') && std::getline(iss, value))
+        size_t pipePos = line.find('|');
+        if (pipePos == std::string::npos)
         {
-            std::string strippedDate  = strip(date);
-            std::string strippedValue = strip(value);
-            try
+            std::cout << "Error: bad input => " << strip(line) << std::endl;
+            continue;
+        }
+        std::string date  = strip(line.substr(0, pipePos));
+        std::string value = strip(line.substr(pipePos + 1));
+
+        try
+        {
+            ValidateDate(date);
+            ValidateValue(value);
+            double value_numeric = std::atof(value.c_str());
+
+            std::map<std::string, double>::const_iterator it = _database.find(date);
+            if (it == _database.end())
             {
-                ValidateDate(strippedDate);
-                ValidateValue(strippedValue);
-                value_numeric = std::atof(strippedValue.c_str());
-
-                std::map<std::string, double>::const_iterator it = _database.lower_bound(strippedDate);
-                if (it == _database.end())
-                    --it;
-
-                double exchangeRate = it->second;
-                double result       = value_numeric * exchangeRate;
-
-                std::cout << strippedDate << " => " << value_numeric << " = " << result << std::endl;
+                it = _database.upper_bound(date);
+                if (it == _database.begin())
+                {
+                    std::cerr << "Error: bad input => " << date << std::endl;
+                    continue;
+                }
+                --it;
             }
-            catch (const std::exception &e)
-            {
-                std::cerr << e.what() << std::endl;
-            }
+
+            double exchangeRate = it->second;
+            double result       = value_numeric * exchangeRate;
+
+            std::cout << date << " => " << value_numeric << " = " << result << std::endl;
+        }
+        catch (const std::exception &e)
+        {
+            std::cerr << e.what() << std::endl;
         }
     }
 }
